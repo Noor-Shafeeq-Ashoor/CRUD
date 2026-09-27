@@ -6,6 +6,7 @@ import com.ga.food.service.*;
 import com.ga.food.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,10 +24,15 @@ public class CategoryController {
 
     //CRUD
     //C-- Create -- HTTP POST - To create a record(category)
-    @PostMapping("/categories")
-    public categories createCategory(@RequestBody categories categoryObject) {
-        System.out.println("Service Calling createCategory ===>");
-        return categoryService.createCategory(categoryObject);
+    @PostMapping(value = "/categories", consumes = "multipart/form-data")
+    public categories createCategory(
+            // can use model attribute rather than this "IMP if we have lots of attribute"
+            @RequestParam String name,
+            @RequestParam String description,
+            @RequestParam MultipartFile image
+    ) {
+
+        return categoryService.createCategory(name, description, image);
     }
 
 
@@ -45,10 +51,7 @@ public class CategoryController {
 
         //U -- Update -- HTTP PUT - To update a record
         @PutMapping("/categories/{id}")
-        public categories updateCategory(
-                @PathVariable Long id,
-                @RequestBody categories categoryObject) {
-
+        public categories updateCategory( @PathVariable Long id, @RequestBody categories categoryObject) {
             return categoryService.updateCategory(id, categoryObject);
         }
 
