@@ -1,10 +1,13 @@
 package com.ga.food.controller;
 
 import com.ga.food.Exception.InfoExistException;
+import com.ga.food.model.User;
 import com.ga.food.model.categories;
+import com.ga.food.security.MyUserDetails;
 import com.ga.food.service.*;
 import com.ga.food.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +19,11 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    public static User getCurrentLoggedInUser(){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUser();
+    }
 
 //    @Autowired
 //    public void setCategoryService(CategoryService categoryService){
