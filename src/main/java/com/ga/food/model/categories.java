@@ -1,5 +1,6 @@
 package com.ga.food.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -49,6 +50,11 @@ public class categories {
     // If a child entity is removed from its parent relationship, delete that child from the database too.
     @OneToMany(fetch = FetchType.EAGER , mappedBy = "category", orphanRemoval = true)
     private List<Recipe> recipeList;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
 
 

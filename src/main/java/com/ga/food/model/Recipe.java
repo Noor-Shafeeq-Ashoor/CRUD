@@ -55,6 +55,11 @@ public class Recipe {
     @UpdateTimestamp
     private LocalDateTime updateAt;
 
+    @JsonIgnore // we put it to avoid enfent loop
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
 
 
 }
